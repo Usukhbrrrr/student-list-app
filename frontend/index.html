@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Student List App</title>
+</head>
+<body>
+  <h1>Оюутны жагсаалт</h1>
+
+  <button onclick="loadStudents()">Оюутнуудыг харах</button>
+
+  <ul id="studentList"></ul>
+
+  <script>
+    async function loadStudents() {
+      const response = await fetch('http://localhost:5000/students');
+      const students = await response.json();
+
+      const list = document.getElementById('studentList');
+      list.innerHTML = '';
+
+      students.forEach(student => {
+        const item = document.createElement('li');
+        item.textContent = student.id + '. ' + student.name + ' - ' + student.major + ' - ' + student.year + '-р курс';
+        list.appendChild(item);
+      });
+    }
+  </script>
+</body>
+</html>
