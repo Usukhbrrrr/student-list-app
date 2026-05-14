@@ -1,0 +1,26 @@
+name: Docker CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code татах
+        uses: actions/checkout@v4
+
+      - name: Docker Hub login хийх
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker image build хийх
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/student-backend:latest ./backend
+
+      - name: Docker Hub руу push хийх
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/student-backend:latest
